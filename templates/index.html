@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List</title>
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> -->
+</head>
+<body>
+    <h1>📝 My To-Do List</h1>
+    <form action="/add" method="POST">
+        <input type="text" name="title" placeholder="New task..." required>
+        <button type="submit">Add</button>
+    </form>
+
+    <ul>
+        {% for task in tasks %}
+        <li>
+            <form action="/toggle/{{ task.id }}" method="GET" style="display:inline;">
+                <button type="submit">
+                    {% if task.is_done %}✅{% else %}⬜{% endif %}
+                </button>
+            </form>
+            <span class="{{ 'done' if task.is_done }}">{{ task.title }}</span>
+            <a href="/delete/{{ task.id }}">🗑️</a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
